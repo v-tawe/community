@@ -1,9 +1,9 @@
-package com.kyss.community.controller.provider;
+package com.kyss.community.provider;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.kyss.community.controller.dto.AccessTokenDTO;
-import com.kyss.community.controller.dto.GitHubUserDTO;
+import com.kyss.community.dto.AccessTokenDTO;
+import com.kyss.community.dto.GitHubUserDTO;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -46,7 +46,7 @@ public class GitHubProvider {
         }
     }
 
-    public GitHubUserDTO getUserInfo(String token) throws IOException {
+        public GitHubUserDTO getUserInfo(String token) throws IOException {
         JSONObject jsonObject = JSON.parseObject(token);
         String stringToken = (String) jsonObject.get("access_token");
         OkHttpClient client = new OkHttpClient();
@@ -62,6 +62,7 @@ public class GitHubProvider {
             gitHubUserDTO.setId(((Number) userInfoObj.get("id")).longValue());
             gitHubUserDTO.setName((String) userInfoObj.get("name"));
             gitHubUserDTO.setBio((String) userInfoObj.get("bio"));
+            gitHubUserDTO.setAvatarUrl((String) userInfoObj.get("avatar_url"));
             return gitHubUserDTO;
         }
     }

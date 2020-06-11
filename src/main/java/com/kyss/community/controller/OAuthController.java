@@ -1,9 +1,9 @@
 package com.kyss.community.controller;
 
-import com.kyss.community.controller.dto.AccessTokenDTO;
-import com.kyss.community.controller.dto.GitHubUserDTO;
-import com.kyss.community.controller.modle.User;
-import com.kyss.community.controller.provider.GitHubProvider;
+import com.kyss.community.dto.AccessTokenDTO;
+import com.kyss.community.dto.GitHubUserDTO;
+import com.kyss.community.modle.User;
+import com.kyss.community.provider.GitHubProvider;
 import com.kyss.community.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,11 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -56,19 +54,20 @@ public class OAuthController {
         accessTokenDTO.setState(state);
         try {
             String accessToken = gitHubProvider.getAccessToken(accessTokenDTO);
-            GitHubUserDTO userDTO = gitHubProvider.getUserInfo(accessToken);
-            System.out.println(userDTO.getName());
-            if (userDTO != null) {
-                request.getSession().setAttribute("user", userDTO);
+            GitHubUserDTO gitHubUserDTO = gitHubProvider.getUserInfo(accessToken);
+            System.out.println(gitHubUserDTO.getName());
+            if (gitHubUserDTO != null) {
+                request.getSession().setAttribute("user", gitHubUserDTO);
 
                 // save to h2 database
                 String token = UUID.randomUUID().toString();
                 User user = new User();
-                user.setName(userDTO.getName());
+                user.setName(gitHubUserDTO.getName());
                 user.setToken(token);
-                user.setAccountId(String.valueOf(userDTO.getId()));
+                user.setAccountId(String.valueOf(gitHubUserDTO.getId()));
                 user.setGmtCreate(System.currentTimeMillis());
                 user.setGmtModified(user.getGmtCreate());
+                user.setAvatarUrl(gitHubUserDTO.getAvatarUrl());
                 userMapper.insert(user);
 
                 // add cookie

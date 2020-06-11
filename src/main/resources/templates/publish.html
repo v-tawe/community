@@ -47,35 +47,36 @@
     </div><!-- /.container-fluid -->
 </nav>
 <div class="container-fluid main">
+    <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Submit new question</h2>
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>Explorer</h2>
-            <div class="media" th:each="question : ${questions}">
-                <div class="media-left">
-                    <a href="#">
-                        <img class="media-object image-circle" th:src="${question.user.avatarUrl}"/>
-                    </a>
+            <form th:action="@{/publish}" method="post" th:object="${question}">
+                <div class="form-group">
+                    <label for="title">Question title</label>
+                    <input type="text" class="form-control" th:field="*{title}" placeholder="Title">
                 </div>
-                <div class="media-body">
-                    <h4 class="media-heading" th:text="${question.title}"></h4>
-                    <span class="text-desc">
-                        <span th:text="${question.description}"></span>
-                        <br>
-                    </span>
-                    <span class="text-desc">
-                        <span th:text="${question.commentCount}"></span> Counts -
-                        <span th:text="${question.viewCount}"></span> Views -
-                        <span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd')}"></span>
-                    </span>
+                <div class="form-group">
+                    <label for="description">Question description</label>
+                    <input type="text" class="form-control" th:field="*{description}" cols="30"
+                           placeholder="Description">
                 </div>
-            </div>
-
+                <div class="form-group">
+                    <label for="tag">Question tag</label>
+                    <input type="text" class="form-control" th:field="*{tag}" placeholder="Tag">
+                </div>
+                <div th:if="${error != null}" class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">ERROR:</span>
+                    <span th:text="${error}"></span>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-            <h3>Hot Topic</h3>
-            <li>topic 1</li>
-            <li>topic 2</li>
-            <li>topic 3</li>
+            <h3>Question Submit Guidance</h3>
+            <li>guide 1</li>
+            <li>guide 2</li>
+            <li>guide 3</li>
         </div>
 
     </div>

@@ -1,6 +1,6 @@
 package com.kyss.community.mapper;
 
-import com.kyss.community.controller.modle.User;
+import com.kyss.community.modle.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -20,8 +20,8 @@ public interface UserMapper {
      * insert a new user
      * @param user
      */
-    @Insert("INSERT INTO user(name, account_id, token, gmt_create, gmt_modified) " +
-            "VALUES(#{name}, #{accountId}, #{token}, #{gmtCreate}, #{gmtModified})")
+    @Insert("INSERT INTO user(name, account_id, token, gmt_create, gmt_modified, avatar_url) " +
+            "VALUES(#{name}, #{accountId}, #{token}, #{gmtCreate}, #{gmtModified}, #{avatarUrl})")
     public void insert(User user);
 
     /**
@@ -31,4 +31,7 @@ public interface UserMapper {
      */
     @Select("SELECT * FROM user WHERE token=#{token}")
     User findByToken(String token);
+
+    @Select("SELECT * FROM user WHERE id=#{id}")
+    User findById(Long Id);
 }

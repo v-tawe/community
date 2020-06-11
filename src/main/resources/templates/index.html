@@ -50,7 +50,7 @@
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>Explorer</h2>
-            <div class="media" th:each="question : ${questions}">
+            <div class="media" th:each="question : ${questions.list}">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object image-circle" th:src="${question.user.avatarUrl}"/>
@@ -69,6 +69,33 @@
                     </span>
                 </div>
             </div>
+            <nav aria-label="Page navigation" th:object="${questions}">
+                <ul class="pagination">
+                    <li th:if="*{isFirstPage == false}">
+                        <a th:href="@{/(pageNo=*{navigateFirstPage})}" aria-label="Head">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li th:if="*{hasPreviousPage == true}">
+                        <a th:href="@{/(pageNo=*{prePage})}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+                    <li th:each="page : *{navigatepageNums}" th:class="${questions.pageNum == page} ? 'active' : ''">
+                        <a th:href="@{/(pageNo=${page})}" th:text="${page}"></a>
+                    </li>
+                    <li th:if="*{hasNextPage == true}">
+                        <a th:href="@{/(pageNo=*{nextPage})}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li th:if="*{isLastPage == false}">
+                        <a th:href="@{/(pageNo=*{navigateLastPage})}" aria-label="Tail">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">

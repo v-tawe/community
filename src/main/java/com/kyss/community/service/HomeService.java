@@ -1,5 +1,7 @@
 package com.kyss.community.service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import com.kyss.community.dto.QuestionDTO;
 
 import java.util.List;
@@ -14,4 +16,6 @@ import java.util.List;
 
 public interface HomeService {
     List<QuestionDTO> listAll();
+
+    PageInfo<QuestionDTO> listAll(int pageNo, int pageSize);
 }

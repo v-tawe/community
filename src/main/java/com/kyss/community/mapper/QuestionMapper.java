@@ -1,5 +1,6 @@
 package com.kyss.community.mapper;
 
+import com.github.pagehelper.Page;
 import com.kyss.community.modle.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -26,5 +27,5 @@ public interface QuestionMapper {
     public void create(Question question);
 
     @Select("SELECT * FROM question")
-    public List<Question> selectAll();
+    public Page<Question> selectAll();
 }

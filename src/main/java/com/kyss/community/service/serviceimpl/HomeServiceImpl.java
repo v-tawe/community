@@ -1,5 +1,8 @@
 package com.kyss.community.service.serviceimpl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.kyss.community.dto.QuestionDTO;
 import com.kyss.community.mapper.QuestionMapper;
 import com.kyss.community.mapper.UserMapper;
@@ -32,7 +35,7 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     public List<QuestionDTO> listAll() {
-        List<Question> questionList = questionMapper.selectAll();
+        List<Question> questionList = new ArrayList<> (questionMapper.selectAll());
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         for (Question question : questionList) {
             QuestionDTO questionDTO = new QuestionDTO();
@@ -40,6 +43,22 @@ public class HomeServiceImpl implements HomeService {
             User user = userMapper.findById(question.getCreator());
             questionDTO.setUser(user);
             questionDTOList.add(questionDTO);
+        }
+        return questionDTOList;
+    }
+
+    @Override
+    public PageInfo<QuestionDTO> listAll(int pageNo, int pageSize) {
+        PageHelper.startPage(pageNo, pageSize);
+        PageInfo<Question> questionList = new PageInfo<> (questionMapper.selectAll());
+        PageInfo<QuestionDTO> questionDTOList = new PageInfo<>(new Page<QuestionDTO>());
+        BeanUtils.copyProperties(questionList, questionDTOList, "list");
+        for (Question question : questionList.getList()) {
+            QuestionDTO questionDTO = new QuestionDTO();
+            BeanUtils.copyProperties(question, questionDTO);
+            User user = userMapper.findById(question.getCreator());
+            questionDTO.setUser(user);
+            questionDTOList.getList().add(questionDTO);
         }
         return questionDTOList;
     }

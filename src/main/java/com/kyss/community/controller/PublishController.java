@@ -2,18 +2,15 @@ package com.kyss.community.controller;
 
 import com.kyss.community.dto.QuestionDTO;
 import com.kyss.community.mapper.QuestionMapper;
-import com.kyss.community.mapper.UserMapper;
 import com.kyss.community.modle.Question;
 import com.kyss.community.modle.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -28,10 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 public class PublishController {
 
     @Autowired
-    QuestionMapper questionMapper;
-
-    @Autowired
-    UserMapper userMapper;
+    private QuestionMapper questionMapper;
 
     @GetMapping("/publish")
     public String publish(Model model) {
@@ -48,8 +42,6 @@ public class PublishController {
             Model model
     ) {
         String token = "";
-        User user = null;
-
         QuestionDTO questionDTO = new QuestionDTO();
         questionDTO.setTitle(title);
         questionDTO.setDescription(description);
@@ -61,18 +53,7 @@ public class PublishController {
             return "publish";
         }
 
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("token")) {
-                    token = cookie.getValue();
-                    break;
-                }
-            }
-            if (!token.isEmpty()) {
-                user = userMapper.findByToken(token);
-            }
-        }
+        User user = (User)request.getAttribute("user");
         if (user != null) {
             Question question = new Question();
             question.setTitle(title);

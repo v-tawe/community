@@ -2,8 +2,6 @@ package com.kyss.community.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.kyss.community.dto.QuestionDTO;
-import com.kyss.community.mapper.QuestionMapper;
-import com.kyss.community.mapper.UserMapper;
 import com.kyss.community.modle.User;
 import com.kyss.community.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -28,34 +25,16 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("profile")
 public class ProfileController {
-    @Autowired
-    UserMapper userMapper;
 
     @Autowired
-    QuestionMapper questionMapper;
-
-    @Autowired
-    ProfileService profileService;
+    private ProfileService profileService;
 
     @GetMapping("/{action}")
     public String profile(@PathVariable("action") String action, HttpServletRequest request, Model model,
                           @RequestParam(defaultValue = "1") int pageNo,
                           @RequestParam(defaultValue = "2") int pageSize) {
 
-        Long userId = null;
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("token")) {
-                    User user = userMapper.findByToken(cookie.getValue());
-                    if (user != null) {
-                        request.getSession().setAttribute("user", user);
-                        userId = user.getId();
-                    }
-                    break;
-                }
-            }
-        }
+        Long userId = ((User)request.getAttribute("user")).getId();
 
         if ("myQuestions".equals(action)) {
             model.addAttribute("section", "myQuestions");

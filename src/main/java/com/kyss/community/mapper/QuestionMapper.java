@@ -32,4 +32,6 @@ public interface QuestionMapper {
     @Select("SELECT * FROM question WHERE creator=#{userId}")
     public Page<Question> selectAllById(Long userId);
 
+    @Select("SELECT * FROM question WHERE id=#{questionId}")
+    Question selectById(Long questionId);
 }

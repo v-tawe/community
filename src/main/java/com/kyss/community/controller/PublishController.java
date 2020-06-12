@@ -4,12 +4,12 @@ import com.kyss.community.dto.QuestionDTO;
 import com.kyss.community.mapper.QuestionMapper;
 import com.kyss.community.modle.Question;
 import com.kyss.community.modle.User;
+import com.kyss.community.service.QuestionService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,21 +27,32 @@ public class PublishController {
     @Autowired
     private QuestionMapper questionMapper;
 
+    @Autowired
+    private QuestionService questionService;
+
     @GetMapping("/publish")
-    public String publish(Model model) {
-        model.addAttribute("question", new QuestionDTO());
+    public String publish() {
+        return "publish";
+    }
+
+    @GetMapping("/publish/{id}")
+    public String publish(@PathVariable("id") Long id, Model model) {
+        QuestionDTO questionDTO = questionService.queryById(id);
+        if (questionDTO != null) {
+            model.addAttribute("question", questionDTO);
+        }
         return "publish";
     }
 
     @PostMapping("/publish")
     public String doPublish(
             @RequestParam(name = "title") String title,
-            @RequestParam(name = "description") String description,
-            @RequestParam(name = "tag") String tag,
+            @RequestParam(name = "description", required = false) String description,
+            @RequestParam(name = "tag", required = false) String tag,
+            @RequestParam(name = "id", required = false) Long id,
             HttpServletRequest request,
             Model model
     ) {
-        String token = "";
         QuestionDTO questionDTO = new QuestionDTO();
         questionDTO.setTitle(title);
         questionDTO.setDescription(description);
@@ -53,21 +64,21 @@ public class PublishController {
             return "publish";
         }
 
-        User user = (User)request.getAttribute("user");
+        User user = (User) request.getSession().getAttribute("user");
         if (user != null) {
             Question question = new Question();
             question.setTitle(title);
             question.setDescription(description);
             question.setTag(tag);
-            question.setGmtCreate(System.currentTimeMillis());
-            question.setGmtModified(question.getGmtCreate());
             question.setCreator(user.getId());
-            questionMapper.create(question);
+            question.setId(id);
+            questionService.createOrUpdate(question);
         } else {
-//            request.getSession().setAttribute("error", "Login First Please!");
             model.addAttribute("error", "Please login first!");
             return "publish";
         }
         return "redirect:/";
     }
+
+
 }

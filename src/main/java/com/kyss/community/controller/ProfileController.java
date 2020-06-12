@@ -34,7 +34,7 @@ public class ProfileController {
                           @RequestParam(defaultValue = "1") int pageNo,
                           @RequestParam(defaultValue = "2") int pageSize) {
 
-        Long userId = ((User)request.getAttribute("user")).getId();
+        Long userId = ((User)request.getSession().getAttribute("user")).getId();
 
         if ("myQuestions".equals(action)) {
             model.addAttribute("section", "myQuestions");

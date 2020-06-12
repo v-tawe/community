@@ -1,6 +1,9 @@
 package com.kyss.community.service;
 
+import com.kyss.community.dto.QuestionDTO;
 import com.kyss.community.modle.Question;
+
+import java.awt.desktop.QuitEvent;
 
 /**
  * @ClassName QuestionService
@@ -11,5 +14,7 @@ import com.kyss.community.modle.Question;
  **/
 
 public interface QuestionService {
-    Question queryById(Long questionId);
+    QuestionDTO queryById(Long questionId);
+
+    Integer createOrUpdate(Question question);
 }

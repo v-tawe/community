@@ -5,8 +5,10 @@ import com.kyss.community.dto.GitHubUserDTO;
 import com.kyss.community.modle.User;
 import com.kyss.community.provider.GitHubProvider;
 import com.kyss.community.mapper.UserMapper;
+import com.kyss.community.service.OAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +36,9 @@ public class OAuthController {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private OAuthService oAuthService;
+
     @Value("${github.client.id}")
     private String clientId;
     @Value("${github.client.secret}")
@@ -42,8 +47,8 @@ public class OAuthController {
     private String redirectUri;
 
     @RequestMapping("/callback")
-    public String callback(@RequestParam(name="code") String code,
-                           @RequestParam(name="state")String state,
+    public String callback(@RequestParam(name = "code") String code,
+                           @RequestParam(name = "state") String state,
                            HttpServletRequest request,
                            HttpServletResponse response) {
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
@@ -65,18 +70,25 @@ public class OAuthController {
                 user.setName(gitHubUserDTO.getName());
                 user.setToken(token);
                 user.setAccountId(String.valueOf(gitHubUserDTO.getId()));
-                user.setGmtCreate(System.currentTimeMillis());
-                user.setGmtModified(user.getGmtCreate());
                 user.setAvatarUrl(gitHubUserDTO.getAvatarUrl());
-                userMapper.insert(user);
+                oAuthService.insertOrUpdate(user);
 
                 // add cookie
                 response.addCookie(new Cookie("token", token));
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
+        return "redirect:/";
+    }
+
+    @RequestMapping("/logout")
+    public String logOut(HttpServletRequest request, HttpServletResponse response) {
+        request.getSession().removeAttribute("user");
+
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
         return "redirect:/";
     }
 }

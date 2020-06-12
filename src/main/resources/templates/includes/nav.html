@@ -24,8 +24,9 @@
                 <button type="submit" class="btn btn-default">Search</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <li th:if="${session.user == null}"><a
-                        href="https://github.com/login/oauth/authorize?client_id=eff06f54074ea9e4eb04&redirect_url=http://localhost:8887/callback&scope=user&state=1">Login</a>
+                <li><a href="/publish">publish</a></li>
+                <li th:if="${session.user == null}">
+                    <a href="https://github.com/login/oauth/authorize?client_id=eff06f54074ea9e4eb04&redirect_url=http://localhost:8887/callback&scope=user&state=1">Login</a>
                 </li>
                 <li th:if="${session.user != null}" class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -36,6 +37,7 @@
                     <ul class="dropdown-menu">
                         <li><a th:href="@{/profile/myQuestions}">My Questions</a></li>
                         <li><a th:href="@{/profile/hotQuestions}">Hot Questions</a></li>
+                        <li><a th:href="@{/logout}">Log Out</a></li>
                     </ul>
                 </li>
             </ul>

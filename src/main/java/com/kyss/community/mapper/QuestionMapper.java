@@ -1,10 +1,12 @@
 package com.kyss.community.mapper;
 
 import com.github.pagehelper.Page;
+import com.kyss.community.dto.QuestionDTO;
 import com.kyss.community.modle.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -24,14 +26,18 @@ public interface QuestionMapper {
      */
     @Insert("INSERT INTO question(title, description, gmt_create, gmt_modified, creator, tag) " +
             "VALUES(#{title}, #{description}, #{gmtCreate}, #{gmtModified}, #{creator}, #{tag})")
-    public void create(Question question);
+    Integer create(Question question);
 
     @Select("SELECT * FROM question")
-    public Page<Question> selectAll();
+    Page<Question> selectAll();
 
     @Select("SELECT * FROM question WHERE creator=#{userId}")
-    public Page<Question> selectAllById(Long userId);
+    Page<Question> selectAllById(Long userId);
 
     @Select("SELECT * FROM question WHERE id=#{questionId}")
     Question selectById(Long questionId);
+
+    @Update("UPDATE question SET title=#{title}, description=#{description}, gmt_modified=#{gmtModified}, " +
+            "creator=#{creator}, tag=#{tag} WHERE id=#{id}")
+    Integer update(QuestionDTO questionDTO);
 }

@@ -29,9 +29,7 @@ public class QuestionController {
 
     @GetMapping("{questionId}")
     public String question(@PathVariable("questionId") Long questionId, Model model) {
-        Question question = questionService.queryById(questionId);
-        QuestionDTO questionDTO = new QuestionDTO();
-        BeanUtils.copyProperties(question,questionDTO);
+        QuestionDTO questionDTO = questionService.queryById(questionId);
         model.addAttribute("question", questionDTO);
         return "question";
     }

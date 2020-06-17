@@ -9,7 +9,7 @@ import com.kyss.community.generator.model.User;
  * @Date 6/15/2020 2:46 PM
  * @Version 1.0
  **/
-public interface OAuthService {
+public interface IOAuthService {
 
     Integer insertOrUpdate(User user);
 }

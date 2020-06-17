@@ -13,7 +13,7 @@ import java.awt.desktop.QuitEvent;
  * @Version 1.0
  **/
 
-public interface QuestionService {
+public interface IQuestionService {
     QuestionDTO queryById(Long questionId);
 
     Integer createOrUpdate(Question question);

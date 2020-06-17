@@ -7,8 +7,7 @@ import com.kyss.community.dto.QuestionDTO;
 import com.kyss.community.generator.dao.QuestionMapper;
 import com.kyss.community.generator.model.Question;
 import com.kyss.community.generator.model.QuestionExample;
-import com.kyss.community.generator.model.User;
-import com.kyss.community.service.ProfileService;
+import com.kyss.community.service.IProfileService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ import org.springframework.stereotype.Service;
  **/
 
 @Service
-public class ProfileServiceImpl implements ProfileService {
+public class ProfileServiceImpl implements IProfileService {
 
     @Autowired
     QuestionMapper questionMapper;

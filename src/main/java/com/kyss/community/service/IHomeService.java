@@ -14,7 +14,7 @@ import java.util.List;
  * @Version 1.0
  **/
 
-public interface HomeService {
+public interface IHomeService {
     List<QuestionDTO> listAll();
 
     PageInfo<QuestionDTO> listAll(int pageNo, int pageSize);

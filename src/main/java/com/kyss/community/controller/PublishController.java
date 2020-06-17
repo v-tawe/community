@@ -3,12 +3,10 @@ package com.kyss.community.controller;
 import com.kyss.community.dto.QuestionDTO;
 import com.kyss.community.exception.CustomizeErrorCode;
 import com.kyss.community.exception.CustomizeException;
-import com.kyss.community.exception.ICustomizeErrorCode;
 import com.kyss.community.generator.dao.QuestionMapper;
 import com.kyss.community.generator.model.Question;
 import com.kyss.community.generator.model.User;
-import com.kyss.community.service.QuestionService;
-import org.jetbrains.annotations.NotNull;
+import com.kyss.community.service.IQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +29,7 @@ public class PublishController {
     private QuestionMapper questionMapper;
 
     @Autowired
-    private QuestionService questionService;
+    private IQuestionService questionService;
 
     @GetMapping("/publish")
     public String publish() {

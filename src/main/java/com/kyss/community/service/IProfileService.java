@@ -10,7 +10,7 @@ import com.kyss.community.dto.QuestionDTO;
  * @Date 6/12/2020 3:07 PM
  * @Version 1.0
  **/
-public interface ProfileService {
+public interface IProfileService {
     PageInfo<QuestionDTO> listAll(Long userId, int pageNo, int pageSize);
 
     PageInfo<QuestionDTO> listAllOrderByViews(int pageNo, int pageSize);

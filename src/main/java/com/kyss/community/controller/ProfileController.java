@@ -3,7 +3,7 @@ package com.kyss.community.controller;
 import com.github.pagehelper.PageInfo;
 import com.kyss.community.dto.QuestionDTO;
 import com.kyss.community.generator.model.User;
-import com.kyss.community.service.ProfileService;
+import com.kyss.community.service.IProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ProfileController {
 
     @Autowired
-    private ProfileService profileService;
+    private IProfileService profileService;
 
     @GetMapping("/{action}")
     public String profile(@PathVariable("action") String action, HttpServletRequest request, Model model,

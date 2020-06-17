@@ -3,10 +3,7 @@ package com.kyss.community.controller;
 import com.kyss.community.dto.QuestionDTO;
 import com.kyss.community.exception.CustomizeErrorCode;
 import com.kyss.community.exception.CustomizeException;
-import com.kyss.community.generator.dao.QuestionMapper;
-import com.kyss.community.generator.model.Question;
-import com.kyss.community.service.QuestionService;
-import org.springframework.beans.BeanUtils;
+import com.kyss.community.service.IQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,15 +24,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class QuestionController {
 
     @Autowired
-    private QuestionService questionService;
+    private IQuestionService IQuestionService;
 
     @GetMapping("{questionId}")
     public String question(@PathVariable("questionId") Long questionId, Model model) {
-        QuestionDTO questionDTO = questionService.queryById(questionId);
+        QuestionDTO questionDTO = IQuestionService.queryById(questionId);
         if (questionDTO == null) {
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
-        questionService.incViewCount(questionId);
+        IQuestionService.incViewCount(questionId);
         // 返回前使 DTO 里 viewCount + 1
         questionDTO.setViewCount(questionDTO.getViewCount()+1);
         model.addAttribute("question", questionDTO);

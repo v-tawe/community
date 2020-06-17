@@ -5,8 +5,7 @@ import com.kyss.community.dto.GitHubUserDTO;
 import com.kyss.community.generator.dao.UserMapper;
 import com.kyss.community.generator.model.User;
 import com.kyss.community.provider.GitHubProvider;
-import com.kyss.community.service.OAuthService;
-import org.springframework.beans.BeanUtils;
+import com.kyss.community.service.IOAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -37,7 +36,7 @@ public class OAuthController {
     private UserMapper userMapper;
 
     @Autowired
-    private OAuthService oAuthService;
+    private IOAuthService IOAuthService;
 
     @Value("${github.client.id}")
     private String clientId;
@@ -69,7 +68,7 @@ public class OAuthController {
                 user.setAccountId(String.valueOf(gitHubUserDTO.getId()));
                 user.setAvatarUrl(gitHubUserDTO.getAvatarUrl());
                 // save to h2 database
-                oAuthService.insertOrUpdate(user);
+                IOAuthService.insertOrUpdate(user);
 
                 // save to session
                 request.getSession().setAttribute("user", user);

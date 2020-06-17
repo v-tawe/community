@@ -2,7 +2,7 @@ package com.kyss.community.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.kyss.community.dto.QuestionDTO;
-import com.kyss.community.service.HomeService;
+import com.kyss.community.service.IHomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 public class HomeController {
 
     @Autowired
-    private HomeService homeService;
+    private IHomeService homeService;
 
     @RequestMapping("/")
     public String index(HttpServletRequest request, Model model, @RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "2") int pageSize) {

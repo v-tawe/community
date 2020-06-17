@@ -9,7 +9,7 @@ import com.kyss.community.generator.dao.UserMapper;
 import com.kyss.community.generator.model.Question;
 import com.kyss.community.generator.model.QuestionExample;
 import com.kyss.community.generator.model.User;
-import com.kyss.community.service.HomeService;
+import com.kyss.community.service.IHomeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ import java.util.List;
  **/
 
 @Service
-public class HomeServiceImpl implements HomeService {
+public class HomeServiceImpl implements IHomeService {
 
     @Autowired
     QuestionMapper questionMapper;

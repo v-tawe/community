@@ -3,8 +3,7 @@ package com.kyss.community.service.serviceimpl;
 import com.kyss.community.generator.dao.UserMapper;
 import com.kyss.community.generator.model.User;
 import com.kyss.community.generator.model.UserExample;
-import com.kyss.community.service.OAuthService;
-import org.springframework.beans.BeanUtils;
+import com.kyss.community.service.IOAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,7 @@ import java.util.List;
  **/
 
 @Service
-public class OAuthServiceImpl implements OAuthService {
+public class OAuthServiceImpl implements IOAuthService {
 
     @Autowired
     UserMapper userMapper;

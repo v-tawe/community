@@ -5,13 +5,10 @@ import com.kyss.community.generator.dao.QuestionMapper;
 import com.kyss.community.generator.model.Question;
 import com.kyss.community.generator.model.QuestionExample;
 import com.kyss.community.mapper.QuestionMapperExt;
-import com.kyss.community.service.QuestionService;
+import com.kyss.community.service.IQuestionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Queue;
 
 /**
  * @ClassName QuestionServiceImpl
@@ -21,7 +18,7 @@ import java.util.Queue;
  * @Version 1.0
  **/
 @Service
-public class QuestionServiceImpl implements QuestionService {
+public class QuestionServiceImpl implements IQuestionService {
 
     @Autowired
     private QuestionMapper questionMapper;

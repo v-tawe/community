@@ -29,15 +29,15 @@
 
         <table tableName="USER">
             <property name="useActualColumnNames" value="false"/>
-            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+            <generatedKey column="ID" sqlStatement="HSQLDB" identity="true"/>
         </table>
         <table tableName="QUESTION">
             <property name="useActualColumnNames" value="false"/>
-            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+            <generatedKey column="ID" sqlStatement="HSQLDB" identity="true"/>
         </table>
         <table tableName="COMMENT">
             <property name="useActualColumnNames" value="false"/>
-            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+            <generatedKey column="ID" sqlStatement="HSQLDB" identity="true"/>
         </table>
 
     </context>

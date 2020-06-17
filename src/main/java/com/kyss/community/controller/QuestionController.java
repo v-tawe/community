@@ -1,6 +1,8 @@
 package com.kyss.community.controller;
 
 import com.kyss.community.dto.QuestionDTO;
+import com.kyss.community.exception.CustomizeErrorCode;
+import com.kyss.community.exception.CustomizeException;
 import com.kyss.community.generator.dao.QuestionMapper;
 import com.kyss.community.generator.model.Question;
 import com.kyss.community.service.QuestionService;
@@ -30,6 +32,12 @@ public class QuestionController {
     @GetMapping("{questionId}")
     public String question(@PathVariable("questionId") Long questionId, Model model) {
         QuestionDTO questionDTO = questionService.queryById(questionId);
+        if (questionDTO == null) {
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
+        questionService.incViewCount(questionId);
+        // 返回前使 DTO 里 viewCount + 1
+        questionDTO.setViewCount(questionDTO.getViewCount()+1);
         model.addAttribute("question", questionDTO);
         return "question";
     }

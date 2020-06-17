@@ -4,6 +4,10 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ *
+ * @author davidt
+ */
 @SpringBootApplication
 @MapperScan({"com.kyss.community.generator", "com.kyss.community.mapper"})
 public class CommunityApplication {

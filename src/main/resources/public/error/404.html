@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Error Page</title>
+    <title>404 Page</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
@@ -11,11 +11,11 @@
     <!--    <link rel="script" href="js/bootstrap.min.js" />-->
 </head>
 <body>
-<div th:replace="includes/nav :: nav"></div>
+<div th:replace="/templates/includes/nav :: nav"></div>
 <div class="container-fluid main">
     <div class="row">
         <div class="jumbotron">
-            <h1>Error Page</h1>
+            <h1>404</h1>
             <p th:text="${message}"></p>
             <p><a class="btn btn-primary btn-lg" href="/" role="button">Back to index</a></p>
         </div>

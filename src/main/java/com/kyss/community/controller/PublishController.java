@@ -1,6 +1,9 @@
 package com.kyss.community.controller;
 
 import com.kyss.community.dto.QuestionDTO;
+import com.kyss.community.exception.CustomizeErrorCode;
+import com.kyss.community.exception.CustomizeException;
+import com.kyss.community.exception.ICustomizeErrorCode;
 import com.kyss.community.generator.dao.QuestionMapper;
 import com.kyss.community.generator.model.Question;
 import com.kyss.community.generator.model.User;
@@ -38,9 +41,10 @@ public class PublishController {
     @GetMapping("/publish/{id}")
     public String publish(@PathVariable("id") Long id, Model model) {
         QuestionDTO questionDTO = questionService.queryById(id);
-        if (questionDTO != null) {
-            model.addAttribute("question", questionDTO);
+        if (questionDTO == null) {
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
+        model.addAttribute("question", questionDTO);
         return "publish";
     }
 
@@ -72,7 +76,10 @@ public class PublishController {
             question.setTag(tag);
             question.setCreator(user.getId());
             question.setId(id);
-            questionService.createOrUpdate(question);
+            int influenceRows = questionService.createOrUpdate(question);
+            if (influenceRows == 0) {
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
         } else {
             model.addAttribute("error", "Please login first!");
             return "publish";

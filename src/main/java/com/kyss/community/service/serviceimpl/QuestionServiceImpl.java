@@ -4,6 +4,7 @@ import com.kyss.community.dto.QuestionDTO;
 import com.kyss.community.generator.dao.QuestionMapper;
 import com.kyss.community.generator.model.Question;
 import com.kyss.community.generator.model.QuestionExample;
+import com.kyss.community.mapper.QuestionMapperExt;
 import com.kyss.community.service.QuestionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     private QuestionMapper questionMapper;
+
+    @Autowired
+    private QuestionMapperExt questionMapperExt;
 
     @Override
     public QuestionDTO queryById(Long questionId) {
@@ -52,4 +56,10 @@ public class QuestionServiceImpl implements QuestionService {
         }
         return col;
     }
+
+    @Override
+    public void incViewCount(Long questionId) {
+        questionMapperExt.incViewCount(questionId);
+    }
+
 }

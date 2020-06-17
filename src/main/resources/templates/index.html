@@ -29,8 +29,9 @@
                         <br>
                     </span>
                     <span class="text-desc">
-                        <span th:text="${question.commentCount}"></span> Counts -
+                        <span th:text="${question.commentCount}"></span> Comments -
                         <span th:text="${question.viewCount}"></span> Views -
+                        <span th:text="${question.likeCount}"></span> Likes -
                         <span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd')}"></span>
                     </span>
                 </div>

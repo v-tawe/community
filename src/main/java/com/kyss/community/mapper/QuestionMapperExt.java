@@ -19,7 +19,7 @@ import java.util.List;
  **/
 
 @Mapper
-public interface QuestionMapper_back {
+public interface QuestionMapperExt {
 
     /**
      * create a new question
@@ -40,4 +40,7 @@ public interface QuestionMapper_back {
     @Update("UPDATE question SET title=#{title}, description=#{description}, gmt_modified=#{gmtModified}, " +
             "creator=#{creator}, tag=#{tag} WHERE id=#{id}")
     Integer update(QuestionDTO questionDTO);
+
+    @Update("UPDATE question SET view_count=view_count + 1 WHERE id=#{questionId}")
+    void incViewCount(Long questionId);
 }

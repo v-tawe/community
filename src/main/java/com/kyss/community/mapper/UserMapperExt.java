@@ -14,7 +14,7 @@ import org.apache.ibatis.annotations.Update;
  * @Version 1.0
  **/
 
-public interface UserMapper_back {
+public interface UserMapperExt {
 
     /**
      * insert a new user

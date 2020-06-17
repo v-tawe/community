@@ -4,7 +4,6 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-
     <context id="DB2Tables" targetRuntime="MyBatis3">
         <jdbcConnection driverClass="org.h2.Driver"
                         connectionURL="jdbc:h2:~/community;AUTO_SERVER=TRUE"
@@ -33,6 +32,10 @@
             <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
         </table>
         <table tableName="QUESTION">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="COMMENT">
             <property name="useActualColumnNames" value="false"/>
             <generatedKey column="ID" sqlStatement="MySql" identity="true"/>
         </table>

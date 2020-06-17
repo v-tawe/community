@@ -17,4 +17,6 @@ public interface QuestionService {
     QuestionDTO queryById(Long questionId);
 
     Integer createOrUpdate(Question question);
+
+    void incViewCount(Long questionId);
 }

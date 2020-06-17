@@ -17,7 +17,7 @@
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <div class="panel panel-default" th:object="${question}">
                 <div class="panel-heading">
-                    <h3 class="panel-title" th:text="*{title}"></h3>
+                    <h2 class="panel-title" th:text="*{title}"></h2>
                 </div>
                 <div class="panel-body">
                     <span>description: </span>
@@ -25,6 +25,11 @@
                     <br>
                     <span>tag: </span>
                     <span th:text="*{tag}"></span>
+                    <br>
+                    <span th:text="*{viewCount}"></span> Views -
+                    <span th:text="*{likeCount}"></span> Likes -
+                    <span th:text="*{commentCount}"></span> Comments -
+                    <span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd')}"></span>
                 </div>
                 <div class="panel-footer">
                     <a th:href="@{'/publish/'+${question.id}}"><span class="glyphicon glyphicon-pencil"></span>编辑</a>

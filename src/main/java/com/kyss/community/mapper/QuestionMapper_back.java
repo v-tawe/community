@@ -2,7 +2,7 @@ package com.kyss.community.mapper;
 
 import com.github.pagehelper.Page;
 import com.kyss.community.dto.QuestionDTO;
-import com.kyss.community.modle.Question;
+import com.kyss.community.generator.model.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -19,7 +19,7 @@ import java.util.List;
  **/
 
 @Mapper
-public interface QuestionMapper {
+public interface QuestionMapper_back {
 
     /**
      * create a new question

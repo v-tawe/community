@@ -4,10 +4,11 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.kyss.community.dto.QuestionDTO;
-import com.kyss.community.mapper.QuestionMapper;
-import com.kyss.community.mapper.UserMapper;
-import com.kyss.community.modle.Question;
-import com.kyss.community.modle.User;
+import com.kyss.community.generator.dao.QuestionMapper;
+import com.kyss.community.generator.dao.UserMapper;
+import com.kyss.community.generator.model.Question;
+import com.kyss.community.generator.model.QuestionExample;
+import com.kyss.community.generator.model.User;
 import com.kyss.community.service.HomeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +36,12 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     public List<QuestionDTO> listAll() {
-        List<Question> questionList = new ArrayList<> (questionMapper.selectAll());
+        List<Question> questionList = new ArrayList<> (questionMapper.selectByExample(new QuestionExample()));
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         for (Question question : questionList) {
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
-            User user = userMapper.findById(question.getCreator());
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
             questionDTO.setUser(user);
             questionDTOList.add(questionDTO);
         }
@@ -50,13 +51,13 @@ public class HomeServiceImpl implements HomeService {
     @Override
     public PageInfo<QuestionDTO> listAll(int pageNo, int pageSize) {
         PageHelper.startPage(pageNo, pageSize);
-        PageInfo<Question> questionList = new PageInfo<> (questionMapper.selectAll());
-        PageInfo<QuestionDTO> questionDTOList = new PageInfo<>(new Page<QuestionDTO>());
+        PageInfo<Question> questionList = new PageInfo<> (questionMapper.selectByExample(new QuestionExample()));
+        PageInfo<QuestionDTO> questionDTOList = new PageInfo<>(new Page<>());
         BeanUtils.copyProperties(questionList, questionDTOList, "list");
         for (Question question : questionList.getList()) {
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
-            User user = userMapper.findById(question.getCreator());
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
             questionDTO.setUser(user);
             questionDTOList.getList().add(questionDTO);
         }

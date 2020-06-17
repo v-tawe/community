@@ -1,6 +1,6 @@
 package com.kyss.community.dto;
 
-import com.kyss.community.modle.User;
+import com.kyss.community.generator.model.User;
 import lombok.Data;
 
 /**

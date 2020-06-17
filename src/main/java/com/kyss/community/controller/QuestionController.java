@@ -1,8 +1,8 @@
 package com.kyss.community.controller;
 
 import com.kyss.community.dto.QuestionDTO;
-import com.kyss.community.mapper.QuestionMapper;
-import com.kyss.community.modle.Question;
+import com.kyss.community.generator.dao.QuestionMapper;
+import com.kyss.community.generator.model.Question;
 import com.kyss.community.service.QuestionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

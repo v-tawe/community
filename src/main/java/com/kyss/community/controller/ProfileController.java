@@ -2,7 +2,7 @@ package com.kyss.community.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.kyss.community.dto.QuestionDTO;
-import com.kyss.community.modle.User;
+import com.kyss.community.generator.model.User;
 import com.kyss.community.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

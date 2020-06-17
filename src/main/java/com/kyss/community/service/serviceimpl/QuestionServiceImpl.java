@@ -1,13 +1,15 @@
 package com.kyss.community.service.serviceimpl;
 
 import com.kyss.community.dto.QuestionDTO;
-import com.kyss.community.mapper.QuestionMapper;
-import com.kyss.community.modle.Question;
+import com.kyss.community.generator.dao.QuestionMapper;
+import com.kyss.community.generator.model.Question;
+import com.kyss.community.generator.model.QuestionExample;
 import com.kyss.community.service.QuestionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -25,7 +27,8 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionDTO queryById(Long questionId) {
-        Question question = questionMapper.selectById(questionId);
+        QuestionExample example = new QuestionExample();
+        Question question = questionMapper.selectByPrimaryKey(questionId);
         if (question == null) {
             return null;
         }
@@ -36,16 +39,16 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Integer createOrUpdate(Question question) {
-        QuestionDTO questionDTO = queryById(question.getId());
+        Question selectQuestion = questionMapper.selectByPrimaryKey(question.getId());
         Integer col = 0;
-        if (questionDTO == null) {
+        if (selectQuestion == null) {
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
-            col = questionMapper.create(question);
+            col = questionMapper.insertSelective(question);
         } else {
-            BeanUtils.copyProperties(question, questionDTO);
+            question.setId(selectQuestion.getId());
             question.setGmtModified(System.currentTimeMillis());
-            col = questionMapper.update(questionDTO);
+            col = questionMapper.updateByPrimaryKey(question);
         }
         return col;
     }

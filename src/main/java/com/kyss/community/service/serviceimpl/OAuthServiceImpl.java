@@ -1,11 +1,14 @@
 package com.kyss.community.service.serviceimpl;
 
-import com.kyss.community.mapper.UserMapper;
-import com.kyss.community.modle.User;
+import com.kyss.community.generator.dao.UserMapper;
+import com.kyss.community.generator.model.User;
+import com.kyss.community.generator.model.UserExample;
 import com.kyss.community.service.OAuthService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @ClassName OAuthServiceImpl
@@ -23,15 +26,17 @@ public class OAuthServiceImpl implements OAuthService {
 
     @Override
     public Integer insertOrUpdate(User user) {
-        User findUser = userMapper.findByAccountId(user.getAccountId());
+        UserExample example = new UserExample();
+        example.createCriteria().andAccountIdEqualTo(user.getAccountId());
+        List<User> findUser = userMapper.selectByExample(example);
         Integer col = 0;
-        if (findUser == null) {
+        if (findUser.size() == 0) {
             user.setGmtCreate(System.currentTimeMillis());
             col = userMapper.insert(user);
         } else {
-            BeanUtils.copyProperties(user, findUser);
+            user.setId(findUser.get(0).getId());
             user.setGmtModified(System.currentTimeMillis());
-            col = userMapper.update(findUser);
+            col = userMapper.updateByPrimaryKey(user);
         }
         return col;
     }

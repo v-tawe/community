@@ -41,7 +41,7 @@ public class GitHubProvider {
                 .build();
         try (Response response = client.newCall(request).execute()) {
             String token = response.body().string();
-            System.out.println(token);
+//            System.out.println(token);
             return token;
         }
     }
@@ -56,7 +56,7 @@ public class GitHubProvider {
                 .build();
         try (Response response = client.newCall(request).execute()) {
             String userInfo = response.body().string();
-            System.out.println(userInfo);
+//            System.out.println(userInfo);
             JSONObject userInfoObj = JSON.parseObject(userInfo);
             GitHubUserDTO gitHubUserDTO = new GitHubUserDTO();
             gitHubUserDTO.setId(((Number) userInfoObj.get("id")).longValue());

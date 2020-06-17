@@ -2,13 +2,13 @@ package com.kyss.community.controller;
 
 import com.kyss.community.dto.AccessTokenDTO;
 import com.kyss.community.dto.GitHubUserDTO;
-import com.kyss.community.modle.User;
+import com.kyss.community.generator.dao.UserMapper;
+import com.kyss.community.generator.model.User;
 import com.kyss.community.provider.GitHubProvider;
-import com.kyss.community.mapper.UserMapper;
 import com.kyss.community.service.OAuthService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,19 +60,19 @@ public class OAuthController {
         try {
             String accessToken = gitHubProvider.getAccessToken(accessTokenDTO);
             GitHubUserDTO gitHubUserDTO = gitHubProvider.getUserInfo(accessToken);
-            System.out.println(gitHubUserDTO.getName());
+//            System.out.println(gitHubUserDTO.getName());
             if (gitHubUserDTO != null) {
-                request.getSession().setAttribute("user", gitHubUserDTO);
-
-                // save to h2 database
-                String token = UUID.randomUUID().toString();
                 User user = new User();
                 user.setName(gitHubUserDTO.getName());
+                String token = UUID.randomUUID().toString();
                 user.setToken(token);
                 user.setAccountId(String.valueOf(gitHubUserDTO.getId()));
                 user.setAvatarUrl(gitHubUserDTO.getAvatarUrl());
+                // save to h2 database
                 oAuthService.insertOrUpdate(user);
 
+                // save to session
+                request.getSession().setAttribute("user", user);
                 // add cookie
                 response.addCookie(new Cookie("token", token));
             }

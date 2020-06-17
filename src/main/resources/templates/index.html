@@ -18,7 +18,7 @@
             <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>Explorer</h2>
             <div class="media" th:each="question : ${questions.list}">
                 <div class="media-left">
-                    <a href="${question.user.avatarUrl}">
+                    <a th:if="${question.user != null}" href="${question.user.avatarUrl}">
                         <img class="media-object image-circle" th:src="${question.user.avatarUrl}"/>
                     </a>
                 </div>

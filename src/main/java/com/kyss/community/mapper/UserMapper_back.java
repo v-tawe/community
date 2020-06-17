@@ -1,6 +1,6 @@
 package com.kyss.community.mapper;
 
-import com.kyss.community.modle.User;
+import com.kyss.community.generator.model.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -14,8 +14,7 @@ import org.apache.ibatis.annotations.Update;
  * @Version 1.0
  **/
 
-@Mapper
-public interface UserMapper {
+public interface UserMapper_back {
 
     /**
      * insert a new user

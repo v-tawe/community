@@ -76,7 +76,6 @@ public class CommentController {
 
         int col = commentService.insert(comment);
         if (col == 1) {
-            col = commentService.incCommentCount(comment.getParentId(), comment.getType());
             return col == 1 ? "success" : "failure";
         }
         return "failure";

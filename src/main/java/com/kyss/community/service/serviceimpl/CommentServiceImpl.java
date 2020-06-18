@@ -9,6 +9,7 @@ import com.kyss.community.mapper.QuestionMapperExt;
 import com.kyss.community.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @ClassName CommentServiceImpl
@@ -31,9 +32,24 @@ public class CommentServiceImpl implements ICommentService {
     CommentMapperExt commentMapperExt;
 
     @Override
+    @Transactional
     public int insert(Comment comment) {
 
         int col = commentMapper.insert(comment);
+        if (col == 1) {
+            incCommentCount(comment.getParentId(), comment.getType());
+        }
+        return col;
+    }
+
+    @Override
+    public int incCommentCount(Long parentId, Integer type) {
+        int col = 0;
+        if (CommentTypeEnum.COMMENT_ON_QUESTION.getType().equals(type)) {
+            col = questionMapperExt.incCommentCount(parentId);
+        } else {
+            col = commentMapperExt.incCommentCount(parentId);
+        }
         return col;
     }
 

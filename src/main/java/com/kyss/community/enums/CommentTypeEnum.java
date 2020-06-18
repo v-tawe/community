@@ -28,8 +28,7 @@ public enum CommentTypeEnum {
     }
 
     public static boolean IS_TYPE_EXIST(Integer type) {
-        CommentTypeEnum[] values = CommentTypeEnum.values();
-        for (CommentTypeEnum value : values) {
+        for (CommentTypeEnum value : CommentTypeEnum.values()) {
            if (value.getType().equals(type)) {
                return true;
            }

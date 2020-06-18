@@ -16,7 +16,7 @@ import java.awt.desktop.QuitEvent;
 public interface IQuestionService {
     QuestionDTO queryById(Long questionId);
 
-    Integer createOrUpdate(Question question);
+    Integer insertOrUpdate(Question question);
 
     void incViewCount(Long questionId);
 }

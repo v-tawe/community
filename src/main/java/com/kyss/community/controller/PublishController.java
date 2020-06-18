@@ -32,7 +32,9 @@ public class PublishController {
     private IQuestionService questionService;
 
     @GetMapping("/publish")
-    public String publish() {
+    public String publish(Model model) {
+        Question question = new Question();
+        model.addAttribute("question", question);
         return "publish";
     }
 
@@ -74,7 +76,10 @@ public class PublishController {
             question.setTag(tag);
             question.setCreator(user.getId());
             question.setId(id);
-            int influenceRows = questionService.createOrUpdate(question);
+            question.setViewCount(0);
+            question.setLikeCount(0);
+            question.setCommentCount(0);
+            int influenceRows = questionService.insertOrUpdate(question);
             if (influenceRows == 0) {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }

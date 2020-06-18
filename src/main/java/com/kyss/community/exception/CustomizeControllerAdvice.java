@@ -25,7 +25,19 @@ public class CustomizeControllerAdvice {
         if (ex instanceof CustomizeException) {
             modelAndView.getModel().put("message", ex.getMessage());
         } else {
-            modelAndView.getModel().put("message", new CustomizeException(CustomizeErrorCode.SERVER_DEFAULT_ERROR).getMessage());
+            if (status.is4xxClientError()) {
+                StringBuilder msg = new StringBuilder(CustomizeErrorCode.PAGE_NOT_FOUND.getMessage());
+                msg.append("\n");
+                msg.append(ex.getMessage());
+            } else if (status.is5xxServerError()) {
+                StringBuilder msg = new StringBuilder(CustomizeErrorCode.SERVER_DEFAULT_ERROR.getMessage());
+                msg.append("\n");
+                msg.append(ex.getMessage());
+                modelAndView.getModel().put("message", msg.toString());
+
+            } else {
+                modelAndView.getModel().put("message", ex.getMessage());
+            }
         }
         return modelAndView;
     }

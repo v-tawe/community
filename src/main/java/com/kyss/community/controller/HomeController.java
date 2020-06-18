@@ -26,7 +26,7 @@ public class HomeController {
     private IHomeService homeService;
 
     @RequestMapping("/")
-    public String index(HttpServletRequest request, Model model, @RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "2") int pageSize) {
+    public String index(HttpServletRequest request, Model model, @RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "5") int pageSize) {
 
         // query questions list
         PageInfo<QuestionDTO> questionDTOList = homeService.listAll(pageNo, pageSize);

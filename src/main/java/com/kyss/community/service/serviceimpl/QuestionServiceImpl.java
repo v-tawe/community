@@ -39,7 +39,7 @@ public class QuestionServiceImpl implements IQuestionService {
     }
 
     @Override
-    public Integer createOrUpdate(Question question) {
+    public Integer insertOrUpdate(Question question) {
         Question selectQuestion = questionMapper.selectByPrimaryKey(question.getId());
         Integer col = 0;
         if (selectQuestion == null) {
@@ -48,6 +48,7 @@ public class QuestionServiceImpl implements IQuestionService {
             col = questionMapper.insertSelective(question);
         } else {
             question.setId(selectQuestion.getId());
+            question.setGmtCreate(selectQuestion.getGmtCreate());
             question.setGmtModified(System.currentTimeMillis());
             col = questionMapper.updateByPrimaryKey(question);
         }

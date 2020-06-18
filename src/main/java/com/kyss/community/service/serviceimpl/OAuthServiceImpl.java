@@ -31,9 +31,11 @@ public class OAuthServiceImpl implements IOAuthService {
         Integer col = 0;
         if (findUser.size() == 0) {
             user.setGmtCreate(System.currentTimeMillis());
+            user.setGmtModified(user.getGmtCreate());
             col = userMapper.insert(user);
         } else {
             user.setId(findUser.get(0).getId());
+            user.setGmtCreate(findUser.get(0).getGmtCreate());
             user.setGmtModified(System.currentTimeMillis());
             col = userMapper.updateByPrimaryKey(user);
         }

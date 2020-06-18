@@ -11,4 +11,6 @@ import com.kyss.community.generator.model.Comment;
  **/
 public interface ICommentService {
     int insert(Comment comment);
+
+    int incCommentCount(Long parentId, Integer type);
 }

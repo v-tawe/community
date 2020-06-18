@@ -42,5 +42,8 @@ public interface QuestionMapperExt {
     Integer update(QuestionDTO questionDTO);
 
     @Update("UPDATE question SET view_count=view_count + 1 WHERE id=#{questionId}")
-    void incViewCount(Long questionId);
+    Integer incViewCount(Long questionId);
+
+    @Update("UPDATE question SET comment_count=comment_count + 1 WHERE id=#{questionId}")
+    Integer incCommentCount(Long questionId);
 }

@@ -1,8 +1,11 @@
 package com.kyss.community.service.serviceimpl;
 
-import com.kyss.community.controller.CommentController;
+import com.kyss.community.enums.CommentTypeEnum;
 import com.kyss.community.generator.dao.CommentMapper;
+import com.kyss.community.generator.dao.QuestionMapper;
 import com.kyss.community.generator.model.Comment;
+import com.kyss.community.mapper.CommentMapperExt;
+import com.kyss.community.mapper.QuestionMapperExt;
 import com.kyss.community.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +24,27 @@ public class CommentServiceImpl implements ICommentService {
     @Autowired
     CommentMapper commentMapper;
 
+    @Autowired
+    QuestionMapperExt questionMapperExt;
+
+    @Autowired
+    CommentMapperExt commentMapperExt;
+
     @Override
     public int insert(Comment comment) {
+
         int col = commentMapper.insert(comment);
+        return col;
+    }
+
+    @Override
+    public int incCommentCount(Long parentId, Integer type) {
+        int col = 0;
+        if (CommentTypeEnum.COMMENT_ON_QUESTION.getType().equals(type)) {
+            col = questionMapperExt.incCommentCount(parentId);
+        } else {
+            col = commentMapperExt.incCommentCount(parentId);
+        }
         return col;
     }
 }

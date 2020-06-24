@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="/css/community.css"/>
     <script src="/js/jquery-3.5.1.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/comment.js" type="application/javascript"></script>
+
     <!--    <link rel="script" href="js/bootstrap.min.js" />-->
 </head>
 <body>
@@ -42,7 +44,24 @@
             <li>topic 2</li>
             <li>topic 3</li>
         </div>
-
+        <br>
+        <div id="comment_section" class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object image-circle" th:src="${session.user.avatarUrl}"/>
+                    </a>
+                </div>
+                <div class="media-body meida-text">
+                    <h5 class="media-heading">
+                        <span th:text="${session.user.name}"></span>
+                    </h5>
+                </div>
+            </div>
+            <input type="hidden" id="question_id" th:value="${question.id}">
+            <textarea id="comment_content" class="form-control" rows="6"></textarea>
+            <button type="button" class="btn btn-success" style="float:right" th:onclick="submitComment()">submit</button>
+        </div>
     </div>
 </div>
 </body>

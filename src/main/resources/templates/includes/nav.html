@@ -7,6 +7,7 @@
 <nav th:fragment="nav" class="navbar navbar-default">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
+
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -29,10 +30,20 @@
                     <a href="https://github.com/login/oauth/authorize?client_id=eff06f54074ea9e4eb04&redirect_url=http://localhost:8887/callback&scope=user&state=1">Login</a>
                 </li>
                 <li th:if="${session.user != null}" class="dropdown">
+
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">
-                        <span th:text="${session.user.name}"></span>
-                        <span class="caret"></span>
+                        <div class="media">
+                            <div class="media-left">
+                                <img class="media-object image-circle" th:src="${session.user.avatarUrl}"/>
+                            </div>
+                            <div class="media-right meida-text">
+                                <h5 class="media-heading">
+                                    <span th:text="${session.user.name}"></span>
+                                    <span class="caret"></span>
+                                </h5>
+                            </div>
+                        </div>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a th:href="@{/profile/myQuestions}">My Questions</a></li>

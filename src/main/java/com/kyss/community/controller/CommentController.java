@@ -1,6 +1,7 @@
 package com.kyss.community.controller;
 
 import com.kyss.community.dto.CommentDTO;
+import com.kyss.community.dto.ResultDTO;
 import com.kyss.community.enums.CommentTypeEnum;
 import com.kyss.community.exception.CustomizeErrorCode;
 import com.kyss.community.exception.CustomizeException;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -41,7 +43,8 @@ public class CommentController {
 
 
     @PostMapping("/comment")
-    public String comment(@RequestBody CommentDTO commentDTO, HttpServletRequest request) {
+    @ResponseBody
+    public ResultDTO comment(@RequestBody CommentDTO commentDTO, HttpServletRequest request) {
         User user = (User)request.getSession().getAttribute("user");
         if (user == null) {
             throw new CustomizeException(CustomizeErrorCode.USER_NOT_LOGIN);
@@ -76,8 +79,8 @@ public class CommentController {
 
         int col = commentService.insert(comment);
         if (col == 1) {
-            return col == 1 ? "success" : "failure";
+            return ResultDTO.successCode();
         }
-        return "failure";
+        return ResultDTO.errorCode();
     }
 }

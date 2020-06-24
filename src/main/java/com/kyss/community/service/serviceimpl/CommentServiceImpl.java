@@ -2,7 +2,6 @@ package com.kyss.community.service.serviceimpl;
 
 import com.kyss.community.enums.CommentTypeEnum;
 import com.kyss.community.generator.dao.CommentMapper;
-import com.kyss.community.generator.dao.QuestionMapper;
 import com.kyss.community.generator.model.Comment;
 import com.kyss.community.mapper.CommentMapperExt;
 import com.kyss.community.mapper.QuestionMapperExt;
@@ -38,17 +37,6 @@ public class CommentServiceImpl implements ICommentService {
         int col = commentMapper.insert(comment);
         if (col == 1) {
             incCommentCount(comment.getParentId(), comment.getType());
-        }
-        return col;
-    }
-
-    @Override
-    public int incCommentCount(Long parentId, Integer type) {
-        int col = 0;
-        if (CommentTypeEnum.COMMENT_ON_QUESTION.getType().equals(type)) {
-            col = questionMapperExt.incCommentCount(parentId);
-        } else {
-            col = commentMapperExt.incCommentCount(parentId);
         }
         return col;
     }

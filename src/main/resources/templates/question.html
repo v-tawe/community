@@ -16,6 +16,7 @@
 <div th:replace="includes/nav :: nav"></div>
 <div class="container-fluid main">
     <div class="row">
+        <!-- question details -->
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <div class="panel panel-default" th:object="${question}">
                 <div class="panel-heading">
@@ -33,7 +34,7 @@
                     <span th:text="*{commentCount}"></span> Comments -
                     <span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd')}"></span>
                 </div>
-                <div class="panel-footer">
+                <div class="panel-footer" th:if="${session.user != null && question.user.id == session.user.id}">
                     <a th:href="@{'/publish/'+${question.id}}"><span class="glyphicon glyphicon-pencil"></span>编辑</a>
                 </div>
             </div>
@@ -44,8 +45,31 @@
             <li>topic 2</li>
             <li>topic 3</li>
         </div>
-        <br>
-        <div id="comment_section" class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+        <hr class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+        <!-- comments details-->
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" th:each="comment : ${comments}">
+            <div class="meida">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object image-circle" th:src="${session.user.avatarUrl}"/>
+                    </a>
+                </div>
+                <div class="media-body meida-text">
+                    <h5 class="media-heading">
+                        <span th:text="${session.user.name}"></span>
+                    </h5>
+                    <div th:text="${comment.content}"></div>
+                    <div>
+                        <span class="glyphicon glyphicon-thumbs-up"></span>
+                        <span class="glyphicon glyphicon-comment"></span>
+                        <span class="pull-right" th:text="${#dates.format(comment.gmtCreate, 'yyyy-MM-dd')}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+        <!-- 回复输入框 -->
+        <div id="comment_section" class="col-lg-9 col-md-12 col-sm-12 col-xs-12" th:if="${session.user != null}">
             <div class="media">
                 <div class="media-left">
                     <a href="#">
@@ -60,7 +84,8 @@
             </div>
             <input type="hidden" id="question_id" th:value="${question.id}">
             <textarea id="comment_content" class="form-control" rows="6"></textarea>
-            <button type="button" class="btn btn-success" style="float:right" th:onclick="submitComment()">submit</button>
+            <button type="button" class="btn btn-success" style="float:right" th:onclick="submitComment()">submit
+            </button>
         </div>
     </div>
 </div>

@@ -2,6 +2,7 @@ package com.kyss.community.service.serviceimpl;
 
 import com.kyss.community.dto.QuestionDTO;
 import com.kyss.community.generator.dao.QuestionMapper;
+import com.kyss.community.generator.dao.UserMapper;
 import com.kyss.community.generator.model.Question;
 import com.kyss.community.generator.model.QuestionExample;
 import com.kyss.community.mapper.QuestionMapperExt;
@@ -24,6 +25,9 @@ public class QuestionServiceImpl implements IQuestionService {
     private QuestionMapper questionMapper;
 
     @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
     private QuestionMapperExt questionMapperExt;
 
     @Override
@@ -35,6 +39,8 @@ public class QuestionServiceImpl implements IQuestionService {
         }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
+        // add user to questionDTO
+        questionDTO.setUser(userMapper.selectByPrimaryKey(questionDTO.getCreator()));
         return questionDTO;
     }
 

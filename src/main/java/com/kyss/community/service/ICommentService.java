@@ -1,6 +1,9 @@
 package com.kyss.community.service;
 
+import com.kyss.community.dto.CommentDTO;
 import com.kyss.community.generator.model.Comment;
+
+import java.util.List;
 
 /**
  * @ClassName CommentService
@@ -12,4 +15,6 @@ import com.kyss.community.generator.model.Comment;
 public interface ICommentService {
     int insert(Comment comment);
     int incCommentCount(Long parentId, Integer type);
+
+    List<CommentDTO> listByQuestionId(Long questionId);
 }

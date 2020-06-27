@@ -1,9 +1,11 @@
 package com.kyss.community.exception;
 
+import com.kyss.community.dto.ResultDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,7 +25,11 @@ public class CustomizeControllerAdvice {
         HttpStatus status = getStatus(request);
         ModelAndView modelAndView = new ModelAndView("/error", status);
         if (ex instanceof CustomizeException) {
-            modelAndView.getModel().put("message", ex.getMessage());
+            ModelAndView mav = new ModelAndView(new MappingJackson2JsonView());
+//            mav.addObject("data", new ResultDTO(((CustomizeException) ex).getCode(), ex.getMessage()));
+            mav.addObject("code", ((CustomizeException) ex).getCode());
+            mav.addObject("message", ex.getMessage());
+            return mav;
         } else {
             if (status.is4xxClientError()) {
                 StringBuilder msg = new StringBuilder(CustomizeErrorCode.PAGE_NOT_FOUND.getMessage());

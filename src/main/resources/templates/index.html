@@ -9,6 +9,13 @@
     <script src="/js/jquery-3.5.1.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <!--    <link rel="script" href="js/bootstrap.min.js" />-->
+    <script type="application/javascript">
+        if (localStorage.closable == "true") {
+            // localStorage.removeItem("closable");
+            localStorage.clear();
+            window.close();
+        }
+    </script>
 </head>
 <body>
 <div th:replace="includes/nav :: nav"></div>

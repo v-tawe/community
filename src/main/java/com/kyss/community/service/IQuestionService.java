@@ -3,8 +3,6 @@ package com.kyss.community.service;
 import com.kyss.community.dto.QuestionDTO;
 import com.kyss.community.generator.model.Question;
 
-import java.awt.desktop.QuitEvent;
-
 /**
  * @ClassName QuestionService
  * @Description TODO

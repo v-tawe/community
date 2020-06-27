@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @ClassName CommentController
@@ -78,5 +79,11 @@ public class CommentController {
             return ResultDTO.successCode();
         }
         return ResultDTO.errorCode();
+    }
+
+    @GetMapping("/comments")
+    public List<CommentDTO> commentList(@RequestParam("id")Long questionId) {
+        List<CommentDTO> commentDTOs = commentService.listByQuestionId(questionId);
+        return commentDTOs;
     }
 }

@@ -1,5 +1,6 @@
 package com.kyss.community.dto;
 
+import com.kyss.community.generator.model.User;
 import lombok.Data;
 
 /**
@@ -20,4 +21,5 @@ public class CommentDTO {
     private Long gmtCreate;
     private Long gmtModified;
     private Long likeCount;
+    private User user;
 }

@@ -44,10 +44,14 @@ public class QuestionController {
         // 返回前使 DTO 里 viewCount + 1
         questionDTO.setViewCount(questionDTO.getViewCount()+1);
 
+        // 添加 Tag 相似 Questions
+        List<QuestionDTO> questionDTOS = questionService.selectRelatedQuestions(questionDTO);
+
         // 添加回复内容
         List<CommentDTO> commentDTOS = commentService.listByQuestionId(questionId);
         model.addAttribute("question", questionDTO);
         model.addAttribute("comments", commentDTOS);
+        model.addAttribute("related", questionDTOS);
         return "question";
     }
 }

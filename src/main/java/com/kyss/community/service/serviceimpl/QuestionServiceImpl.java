@@ -11,6 +11,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @ClassName QuestionServiceImpl
  * @Description TODO
@@ -66,4 +69,15 @@ public class QuestionServiceImpl implements IQuestionService {
         questionMapperExt.incViewCount(questionId);
     }
 
+    @Override
+    public List<QuestionDTO> selectRelatedQuestions(QuestionDTO questionDTO) {
+        String tags = questionDTO.getTag().replace(",","|");
+        List<Question> questions = questionMapperExt.selectRelatedQuestions(tags);
+        List<QuestionDTO> questionDTOS = questions.stream().map(question -> {
+            QuestionDTO questionDTOTemp = new QuestionDTO();
+            BeanUtils.copyProperties(question, questionDTOTemp);
+            return questionDTOTemp;
+        }).collect(Collectors.toList());
+        return questionDTOS;
+    }
 }

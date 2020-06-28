@@ -27,7 +27,9 @@
                     <span th:text="*{description}"></span>
                     <br>
                     <span>tag: </span>
-                    <span th:text="*{tag}"></span>
+                    <span th:each="tag : ${question.tag.split(',')}">
+                        <span class="label label-info" th:text="${tag}"></span>
+                    </span>
                     <br>
                     <span th:text="*{viewCount}"></span> Views -
                     <span th:text="*{likeCount}"></span> Likes -
@@ -40,14 +42,17 @@
             </div>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-            <h3>Hot topics</h3>
-            <li>topic 1</li>
-            <li>topic 2</li>
-            <li>topic 3</li>
+            <h3>Related topics</h3>
+            <ul>
+                <li th:each="relatedQuestion : ${related}">
+                    <a th:href="@{'/question/' + ${relatedQuestion.id}}" th:text="${relatedQuestion.title}"></a>
+                </li>
+            </ul>
         </div>
         <hr class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
         <!-- comments details-->
-        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" th:each="comment : ${comments}">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" th:each="comment : ${comments}"
+             th:if="${session.user != null}">
             <div class="meida">
                 <div class="media-left">
                     <a href="#">

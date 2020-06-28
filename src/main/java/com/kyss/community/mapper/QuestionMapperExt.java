@@ -46,4 +46,7 @@ public interface QuestionMapperExt {
 
     @Update("UPDATE question SET comment_count=comment_count + 1 WHERE id=#{questionId}")
     Integer incCommentCount(Long questionId);
+
+    @Select("SELECT * FROM question WHERE tag REGEXP #{tagsReg}")
+    List<Question> selectRelatedQuestions(String tagsReg);
 }

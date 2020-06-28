@@ -14,6 +14,7 @@ function submitComment() {
             dataType: "json",
             success: function (response) {
                 if (response.code == 200) {
+                    window.location.reload();
                     $('#comment_section').hide();
                 } else if (response.code == 1001) {
                     let isAccepted = confirm(response.message);

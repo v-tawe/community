@@ -3,6 +3,8 @@ package com.kyss.community.service;
 import com.kyss.community.dto.QuestionDTO;
 import com.kyss.community.generator.model.Question;
 
+import java.util.List;
+
 /**
  * @ClassName QuestionService
  * @Description TODO
@@ -17,4 +19,6 @@ public interface IQuestionService {
     Integer insertOrUpdate(Question question);
 
     void incViewCount(Long questionId);
+
+    List<QuestionDTO> selectRelatedQuestions(QuestionDTO questionDTO);
 }

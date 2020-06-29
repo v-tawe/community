@@ -1,6 +1,5 @@
 package com.kyss.community.service;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.kyss.community.dto.QuestionDTO;
 

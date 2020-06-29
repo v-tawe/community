@@ -36,7 +36,7 @@ public class HomeServiceImpl implements IHomeService {
 
     @Override
     public List<QuestionDTO> listAll() {
-        List<Question> questionList = new ArrayList<> (questionMapper.selectByExample(new QuestionExample()));
+        List<Question> questionList = new ArrayList<> (questionMapper.selectByExampleWithBLOBs(new QuestionExample()));
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         for (Question question : questionList) {
             QuestionDTO questionDTO = new QuestionDTO();
@@ -51,7 +51,7 @@ public class HomeServiceImpl implements IHomeService {
     @Override
     public PageInfo<QuestionDTO> listAll(int pageNo, int pageSize) {
         PageHelper.startPage(pageNo, pageSize);
-        PageInfo<Question> questionList = new PageInfo<> (questionMapper.selectByExample(new QuestionExample()));
+        PageInfo<Question> questionList = new PageInfo<> (questionMapper.selectByExampleWithBLOBs(new QuestionExample()));
         PageInfo<QuestionDTO> questionDTOList = new PageInfo<>(new Page<>());
         BeanUtils.copyProperties(questionList, questionDTOList, "list");
         for (Question question : questionList.getList()) {

@@ -23,26 +23,28 @@
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>Explorer</h2>
-            <div class="media" th:each="question : ${questions.list}">
-                <div class="media-left">
-                    <a th:if="${question.user != null}" href="${question.user.avatarUrl}">
-                        <img class="media-object image-circle" th:src="${question.user.avatarUrl}"/>
-                    </a>
-                </div>
-                <div class="media-body">
-                    <a th:href="@{'/question/' + ${question.id}}"><h4 class="media-heading" th:text="${question.title}"></h4></a>
-                    <span class="text-desc">
-                        <span th:text="${question.description}"></span>
+            <ul class="list-group">
+                <li class="list-group-item media" th:each="question : ${questions.list}">
+                    <div class="media-left">
+                        <a th:if="${question.user != null}" href="${question.user.avatarUrl}">
+                            <img class="media-object image-circle" th:src="${question.user.avatarUrl}"/>
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <a th:href="@{'/question/' + ${question.id}}">
+                            <h4 class="media-heading" th:text="${question.title}"></h4></a>
+                        <span class="text-desc" th:text="${question.description}"></span>
                         <br>
                     </span>
-                    <span class="text-desc">
+                        <span class="text-desc">
                         <span th:text="${question.commentCount}"></span> Comments -
                         <span th:text="${question.viewCount}"></span> Views -
                         <span th:text="${question.likeCount}"></span> Likes -
                         <span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd')}"></span>
                     </span>
-                </div>
-            </div>
+                    </div>
+                </li>
+            </ul>
             <nav aria-label="Page navigation" th:object="${questions}">
                 <ul class="pagination">
                     <li th:if="*{isFirstPage == false}">

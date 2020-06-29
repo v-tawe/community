@@ -32,14 +32,18 @@ public class ProfileController {
     @GetMapping("/{action}")
     public String profile(@PathVariable("action") String action, HttpServletRequest request, Model model,
                           @RequestParam(defaultValue = "1") int pageNo,
-                          @RequestParam(defaultValue = "2") int pageSize) {
+                          @RequestParam(defaultValue = "5") int pageSize) {
 
         Long userId = ((User)request.getSession().getAttribute("user")).getId();
+        Long countAllQuestions = profileService.countAllQuestions();
+        model.addAttribute("countAllQuestions", countAllQuestions);
+        Long countMyQuestions = profileService.countMyQuestions(userId);
+        model.addAttribute("countMyQuestions", countMyQuestions);
 
         if ("myQuestions".equals(action)) {
             model.addAttribute("section", "myQuestions");
             // query questions list
-            PageInfo<QuestionDTO> questionDTOList = profileService.listAll(userId, pageNo, pageSize);
+            PageInfo<QuestionDTO> questionDTOList = profileService.listMyQuesitons(userId, pageNo, pageSize);
             model.addAttribute("questions", questionDTOList);
 
         } else if ("hotQuestions".equals(action)) {

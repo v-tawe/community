@@ -76,7 +76,9 @@ public class CommentServiceImpl implements ICommentService {
         commentExample.setOrderByClause("gmt_create desc");
 
         List<Comment> comments = commentMapper.selectByExample(commentExample);
-        if (comments.size() == 0) return new ArrayList<>();
+        if (comments.size() == 0) {
+            return new ArrayList<>();
+        }
 
         // 获取去重评论人
         Set<Long> commenters = comments.stream().map(comment -> comment.getCommenter()).collect(Collectors.toSet());

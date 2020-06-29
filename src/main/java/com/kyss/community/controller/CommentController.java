@@ -3,17 +3,20 @@ package com.kyss.community.controller;
 import com.kyss.community.dto.CommentDTO;
 import com.kyss.community.dto.ResultDTO;
 import com.kyss.community.enums.CommentTypeEnum;
+import com.kyss.community.enums.NotificationStatusEnum;
+import com.kyss.community.enums.NotificationTypeEnum;
 import com.kyss.community.exception.CustomizeErrorCode;
 import com.kyss.community.exception.CustomizeException;
 import com.kyss.community.generator.dao.CommentMapper;
+import com.kyss.community.generator.dao.NotificationMapper;
 import com.kyss.community.generator.dao.QuestionMapper;
 import com.kyss.community.generator.model.Comment;
+import com.kyss.community.generator.model.Notification;
 import com.kyss.community.generator.model.Question;
 import com.kyss.community.generator.model.User;
 import com.kyss.community.service.ICommentService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +38,9 @@ public class CommentController {
 
     @Autowired
     QuestionMapper questionMapper;
+
+    @Autowired
+    NotificationMapper notificationMapper;
 
     @Autowired
     CommentMapper commentMapper;
@@ -66,12 +72,19 @@ public class CommentController {
             if (question == null) {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NO_PARENT);
             }
+
+            // add notification
+            AddNotification(comment.getParentId(), user.getId(), question.getCreator(), NotificationTypeEnum.NOTIFY_ON_QUESTION.getType());
+
         } else {
             // comment on comment
             Comment parComment = commentMapper.selectByPrimaryKey(comment.getParentId());
             if (parComment == null) {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NO_PARENT);
             }
+
+            // add notification
+            AddNotification(comment.getParentId(), user.getId(), parComment.getCommenter(), NotificationTypeEnum.NOTIFY_ON_COMMENT.getType());
         }
 
         int col = commentService.insert(comment);
@@ -79,6 +92,17 @@ public class CommentController {
             return ResultDTO.successCode();
         }
         return ResultDTO.errorCode();
+    }
+
+    private void AddNotification(Long outerId, Long notifier, Long receiver, int type) {
+        Notification notification = new Notification();
+        notification.setGmtCreate(System.currentTimeMillis());
+        notification.setNotifier(notifier);
+        notification.setReceiver(receiver);
+        notification.setOuterId(outerId);
+        notification.setStatus(NotificationStatusEnum.UNREAD.getStatus());
+        notification.setType(type);
+        notificationMapper.insert(notification);
     }
 
     @GetMapping("/comments")

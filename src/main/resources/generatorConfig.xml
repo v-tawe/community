@@ -39,6 +39,10 @@
             <property name="useActualColumnNames" value="false"/>
             <generatedKey column="ID" sqlStatement="HSQLDB" identity="true"/>
         </table>
+        <table tableName="NOTIFICATION">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="ID" sqlStatement="HSQLDB" identity="true"/>
+        </table>
 
     </context>
 </generatorConfiguration>

@@ -9,8 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @ClassName HomeController
  * @Description TODO
@@ -26,7 +24,7 @@ public class HomeController {
     private IHomeService homeService;
 
     @RequestMapping("/")
-    public String index(HttpServletRequest request, Model model, @RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "5") int pageSize) {
+    public String index(Model model, @RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "5") int pageSize) {
 
         // query questions list
         PageInfo<QuestionDTO> questionDTOList = homeService.listAll(pageNo, pageSize);

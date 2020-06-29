@@ -15,45 +15,39 @@
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-            <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true"><span th:text="${section == 'myQuestions' ? 'MyQuesitons' : 'HotQuesitons'}"></span></span></h2>
-            <ul class="list-group" th:each="question : ${questions.list}">
+            <h2><span class="glyphicon glyphicon-th-list" aria-hidden="true">Notifications</span></h2>
+            <ul class="list-group" th:each="notification : ${notifications.list}">
                 <li class="list-group-item">
-                    <h4>
-                        <a th:href="@{'/question/' + ${question.id}}" th:text="${question.title}"></a>
-                    </h4>
-                    <span>
-                        <span th:text="${question.description}"></span>
-                    </span>
-                    <span>
-                        <span th:text="${question.commentCount}"></span> Counts -
-                        <span th:text="${question.viewCount}"></span> Views -
-                        <span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd')}"></span>
-                    </span>
-                    <a th:href="@{'/publish/'+${question.id}}"><span class="glyphicon glyphicon-pencil"></span>编辑</a>
+                    <span th:text="${notification.notifierName}"></span>
+                    <span th:text="${notification.typeName}"></span>
+                    <a th:href="@{'/question/'+${notification.outerId}}">
+                        <span th:text="${notification.title}"></span>
+                    </a>
+                    <span class="badge" th:if="${notification.isRead == false}">UnRead</span></a>
                 </li>
             </ul>
-            <nav aria-label="Page navigation" th:object="${questions}">
+            <nav aria-label="Page navigation" th:object="${notifications}">
                 <ul class="pagination">
                     <li th:if="*{isFirstPage == false}">
-                        <a th:href="@{'/profile/' + ${section}(pageNo=*{navigateFirstPage})}" aria-label="Head">
+                        <a th:href="@{'/notifcation/' + (pageNo=*{navigateFirstPage})}" aria-label="Head">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <li th:if="*{hasPreviousPage == true}">
-                        <a th:href="@{'/profile/' + ${section}(pageNo=*{prePage})}" aria-label="Previous">
+                        <a th:href="@{'/notifcation/' + (pageNo=*{prePage})}" aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
-                    <li th:each="page : *{navigatepageNums}" th:class="${questions.pageNum == page} ? 'active' : ''">
-                        <a th:href="@{'/profile/' + ${section}(pageNo=${page})}" th:text="${page}"></a>
+                    <li th:each="page : *{navigatepageNums}" th:class="${notifications.pageNum == page} ? 'active' : ''">
+                        <a th:href="@{'/notifcation/' + (pageNo=${page})}" th:text="${page}"></a>
                     </li>
                     <li th:if="*{hasNextPage == true}">
-                        <a th:href="@{'/profile/' + ${section}(pageNo=*{nextPage})}" aria-label="Previous">
+                        <a th:href="@{'/notifcation/' + (pageNo=*{nextPage})}" aria-label="Previous">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
                     <li th:if="*{isLastPage == false}">
-                        <a th:href="@{'/profile/' + ${section}(pageNo=*{navigateLastPage})}" aria-label="Tail">
+                        <a th:href="@{'/notifcation/' + (pageNo=*{navigateLastPage})}" aria-label="Tail">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>

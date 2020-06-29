@@ -27,10 +27,10 @@ public class ProfileServiceImpl implements IProfileService {
     QuestionMapper questionMapper;
 
     @Override
-    public PageInfo<QuestionDTO> listAll(Long userId, int pageNo, int pageSize) {
+    public PageInfo<QuestionDTO> listMyQuesitons(Long userId, int pageNo, int pageSize) {
         PageHelper.startPage(pageNo, pageSize);
         QuestionExample questionExample = new QuestionExample();
-        questionExample.createCriteria().andIdEqualTo(userId);
+        questionExample.createCriteria().andCreatorEqualTo(userId);
         PageInfo<Question> questionList = new PageInfo<> (questionMapper.selectByExample(questionExample));
         PageInfo<QuestionDTO> questionDTOList = new PageInfo<>(new Page<QuestionDTO>());
         BeanUtils.copyProperties(questionList, questionDTOList);
@@ -44,5 +44,17 @@ public class ProfileServiceImpl implements IProfileService {
         PageInfo<QuestionDTO> questionDTOList = new PageInfo<>(new Page<QuestionDTO>());
         BeanUtils.copyProperties(questionList, questionDTOList);
         return questionDTOList;
+    }
+
+    @Override
+    public Long countAllQuestions() {
+        return questionMapper.countByExample(new QuestionExample());
+    }
+
+    @Override
+    public Long countMyQuestions(Long userId) {
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.createCriteria().andCreatorEqualTo(userId);
+        return questionMapper.countByExample(questionExample);
     }
 }

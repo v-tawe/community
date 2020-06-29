@@ -11,7 +11,11 @@ import com.kyss.community.dto.QuestionDTO;
  * @Version 1.0
  **/
 public interface IProfileService {
-    PageInfo<QuestionDTO> listAll(Long userId, int pageNo, int pageSize);
+    PageInfo<QuestionDTO> listMyQuesitons(Long userId, int pageNo, int pageSize);
 
     PageInfo<QuestionDTO> listAllOrderByViews(int pageNo, int pageSize);
+
+    Long countAllQuestions();
+
+    Long countMyQuestions(Long userId);
 }

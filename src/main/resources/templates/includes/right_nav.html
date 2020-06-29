@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<nav th:fragment="right_nav">
+    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+        <div class="list-group">
+            <a th:href="@{/profile/myQuestions}"
+               th:class="${section == 'myQuestions' ? 'active list-group-item' : 'list-group-item'}">
+                <span>My Questions</span>
+                <span class="badge" th:text="${countMyQuestions}"></span>
+            </a>
+            <a th:href="@{/profile/hotQuestions}"
+               th:class="${section == 'hotQuestions' ? 'active list-group-item' : 'list-group-item'}">
+                <span>Hot Questions</span>
+                <span class="badge" th:text="${countAllQuestions}"></span>
+            </a>
+        </div>
+    </div>
+</nav>
+</body>
+</html>
+

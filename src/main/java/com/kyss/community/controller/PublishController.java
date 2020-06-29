@@ -3,7 +3,6 @@ package com.kyss.community.controller;
 import com.kyss.community.dto.QuestionDTO;
 import com.kyss.community.exception.CustomizeErrorCode;
 import com.kyss.community.exception.CustomizeException;
-import com.kyss.community.generator.dao.QuestionMapper;
 import com.kyss.community.generator.model.Question;
 import com.kyss.community.generator.model.User;
 import com.kyss.community.service.IQuestionService;

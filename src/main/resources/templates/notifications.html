@@ -20,7 +20,7 @@
                 <li class="list-group-item">
                     <span th:text="${notification.notifierName}"></span>
                     <span th:text="${notification.typeName}"></span>
-                    <a th:href="@{'/question/'+${notification.outerId}}">
+                    <a th:href="@{'/profile/notification/'+${notification.id}}">
                         <span th:text="${notification.title}"></span>
                     </a>
                     <span class="badge" th:if="${notification.isRead == false}">UnRead</span></a>
@@ -29,25 +29,25 @@
             <nav aria-label="Page navigation" th:object="${notifications}">
                 <ul class="pagination">
                     <li th:if="*{isFirstPage == false}">
-                        <a th:href="@{'/notifcation/' + (pageNo=*{navigateFirstPage})}" aria-label="Head">
+                        <a th:href="@{'/profile/notifcations/' + (pageNo=*{navigateFirstPage})}" aria-label="Head">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <li th:if="*{hasPreviousPage == true}">
-                        <a th:href="@{'/notifcation/' + (pageNo=*{prePage})}" aria-label="Previous">
+                        <a th:href="@{'/profile/notifcations/' + (pageNo=*{prePage})}" aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
                     <li th:each="page : *{navigatepageNums}" th:class="${notifications.pageNum == page} ? 'active' : ''">
-                        <a th:href="@{'/notifcation/' + (pageNo=${page})}" th:text="${page}"></a>
+                        <a th:href="@{'/profile/notifcations/' + (pageNo=${page})}" th:text="${page}"></a>
                     </li>
                     <li th:if="*{hasNextPage == true}">
-                        <a th:href="@{'/notifcation/' + (pageNo=*{nextPage})}" aria-label="Previous">
+                        <a th:href="@{'/profile/notifcations/' + (pageNo=*{nextPage})}" aria-label="Previous">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
                     <li th:if="*{isLastPage == false}">
-                        <a th:href="@{'/notifcation/' + (pageNo=*{navigateLastPage})}" aria-label="Tail">
+                        <a th:href="@{'/profile/notifcations/' + (pageNo=*{navigateLastPage})}" aria-label="Tail">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>

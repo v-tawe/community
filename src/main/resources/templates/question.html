@@ -36,7 +36,7 @@
                     <span th:text="*{commentCount}"></span> Comments -
                     <span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd')}"></span>
                 </div>
-                <div class="panel-footer" th:if="${session.user != null && question.user.id == session.user.id}">
+                <div class="panel-footer" th:if="${session.user != null && question.user != null && question.user.id == session.user.id}">
                     <a th:href="@{'/publish/'+${question.id}}"><span class="glyphicon glyphicon-pencil"></span>编辑</a>
                 </div>
             </div>

@@ -8,8 +8,8 @@ package com.kyss.community.enums;
  * @Version 1.0
  **/
 public enum NotificationTypeEnum {
-    NOTIFY_ON_COMMENT(1, "comment on comment."),
-    NOTIFY_ON_QUESTION(2, "comment on question.");
+    NOTIFY_ON_COMMENT(1, "comment on comment: "),
+    NOTIFY_ON_QUESTION(2, "comment on question: ");
 
     private int type;
     private String name;

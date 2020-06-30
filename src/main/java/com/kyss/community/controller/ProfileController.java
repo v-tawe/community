@@ -1,9 +1,12 @@
 package com.kyss.community.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.kyss.community.dto.NotificationDTO;
 import com.kyss.community.dto.QuestionDTO;
+import com.kyss.community.generator.model.Notification;
 import com.kyss.community.generator.model.User;
 import com.kyss.community.service.IProfileService;
+import com.kyss.community.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +32,9 @@ public class ProfileController {
     @Autowired
     private IProfileService profileService;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @GetMapping("/{action}")
     public String profile(@PathVariable("action") String action, HttpServletRequest request, Model model,
                           @RequestParam(defaultValue = "1") int pageNo,
@@ -40,7 +46,13 @@ public class ProfileController {
         Long countMyQuestions = profileService.countMyQuestions(userId);
         model.addAttribute("countMyQuestions", countMyQuestions);
 
-        if ("myQuestions".equals(action)) {
+        if ("notifications".equals(action)) {
+            model.addAttribute("section", "notifications");
+            PageInfo<NotificationDTO> notificationDTOPageInfo = notificationService.listAll(pageNo, pageSize);
+            model.addAttribute("notifications", notificationDTOPageInfo);
+            return "notifications";
+
+        } else if ("myQuestions".equals(action)) {
             model.addAttribute("section", "myQuestions");
             // query questions list
             PageInfo<QuestionDTO> questionDTOList = profileService.listMyQuesitons(userId, pageNo, pageSize);
@@ -53,6 +65,14 @@ public class ProfileController {
             model.addAttribute("questions", questionDTOList);
         }
         return "profile";
+    }
+
+    @RequestMapping("/notification/{id}")
+    public String notificationRedirect(@PathVariable("id") Long id) {
+
+        Notification notification = notificationService.selectByPrimaryKey(id);
+        notificationService.read(id);
+        return "redirect:/question/" + notification.getOuterId();
     }
 
 }

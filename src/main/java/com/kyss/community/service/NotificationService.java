@@ -2,6 +2,7 @@ package com.kyss.community.service;
 
 import com.github.pagehelper.PageInfo;
 import com.kyss.community.dto.NotificationDTO;
+import com.kyss.community.generator.model.Notification;
 
 /**
  * @ClassName NotificationService
@@ -12,4 +13,8 @@ import com.kyss.community.dto.NotificationDTO;
  **/
 public interface NotificationService {
     PageInfo<NotificationDTO> listAll(int pageNo, int pageSize);
+
+    int read(Long id);
+
+    Notification selectByPrimaryKey(Long id);
 }

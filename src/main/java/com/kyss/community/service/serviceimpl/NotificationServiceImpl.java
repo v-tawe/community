@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.kyss.community.dto.NotificationDTO;
 import com.kyss.community.enums.NotificationStatusEnum;
 import com.kyss.community.enums.NotificationTypeEnum;
+import com.kyss.community.exception.CustomizeException;
 import com.kyss.community.generator.dao.NotificationMapper;
 import com.kyss.community.generator.dao.QuestionMapper;
 import com.kyss.community.generator.dao.UserMapper;
@@ -17,6 +18,7 @@ import com.kyss.community.service.NotificationService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -65,5 +67,18 @@ public class NotificationServiceImpl implements NotificationService {
         }).collect(Collectors.toList());
         notificationDTOPageInfo.setList(notificationDTOs);
         return notificationDTOPageInfo;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int read(Long id) {
+        Notification notification = notificationMapper.selectByPrimaryKey(id);
+        notification.setStatus(NotificationStatusEnum.READ.getStatus());
+        return notificationMapper.updateByPrimaryKey(notification);
+    }
+
+    @Override
+    public Notification selectByPrimaryKey(Long id) {
+        return notificationMapper.selectByPrimaryKey(id);
     }
 }

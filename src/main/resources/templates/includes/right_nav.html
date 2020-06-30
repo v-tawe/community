@@ -7,6 +7,11 @@
 <nav th:fragment="right_nav">
     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
         <div class="list-group">
+            <a th:href="@{/profile/notifications}"
+               th:class="${section == 'notifications' ? 'active list-group-item' : 'list-group-item'}">
+                <span>Notifications</span>
+                <span class="badge" th:text="${session.notificationCounts}"></span>
+            </a>
             <a th:href="@{/profile/myQuestions}"
                th:class="${section == 'myQuestions' ? 'active list-group-item' : 'list-group-item'}">
                 <span>My Questions</span>

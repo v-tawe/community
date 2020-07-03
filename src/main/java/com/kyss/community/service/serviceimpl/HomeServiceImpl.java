@@ -49,9 +49,11 @@ public class HomeServiceImpl implements IHomeService {
     }
 
     @Override
-    public PageInfo<QuestionDTO> listAll(int pageNo, int pageSize) {
+    public PageInfo<QuestionDTO> listAll(int pageNo, int pageSize, String search) {
         PageHelper.startPage(pageNo, pageSize);
-        PageInfo<Question> questionList = new PageInfo<> (questionMapper.selectByExampleWithBLOBs(new QuestionExample()));
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.createCriteria().andTitleLike("%" + search + "%");
+        PageInfo<Question> questionList = new PageInfo<> (questionMapper.selectByExampleWithBLOBs(questionExample));
         PageInfo<QuestionDTO> questionDTOList = new PageInfo<>(new Page<>());
         BeanUtils.copyProperties(questionList, questionDTOList, "list");
         for (Question question : questionList.getList()) {

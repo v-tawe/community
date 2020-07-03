@@ -16,5 +16,5 @@ import java.util.List;
 public interface IHomeService {
     List<QuestionDTO> listAll();
 
-    PageInfo<QuestionDTO> listAll(int pageNo, int pageSize);
+    PageInfo<QuestionDTO> listAll(int pageNo, int pageSize, String search);
 }

@@ -24,10 +24,10 @@ public class HomeController {
     private IHomeService homeService;
 
     @RequestMapping("/")
-    public String index(Model model, @RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "5") int pageSize) {
-
+    public String index(Model model, @RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "5") int pageSize, @RequestParam(defaultValue = "") String search) {
+//        String search="";
         // query questions list
-        PageInfo<QuestionDTO> questionDTOList = homeService.listAll(pageNo, pageSize);
+        PageInfo<QuestionDTO> questionDTOList = homeService.listAll(pageNo, pageSize, search);
         model.addAttribute("questions", questionDTOList);
         return "index";
     }

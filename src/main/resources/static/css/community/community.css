@@ -1,0 +1,16 @@
+.main {
+    margin: 30px;
+}
+
+.media-object {
+    width: 38px;
+    height: 38px;
+}
+
+.meida-text {
+    padding: 10px 0;
+}
+
+.CodeMirror, .CodeMirror-scroll {
+    min-height: 50px;
+}

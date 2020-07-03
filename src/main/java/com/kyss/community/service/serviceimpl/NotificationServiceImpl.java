@@ -46,7 +46,10 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public PageInfo<NotificationDTO> listAll(int pageNo, int pageSize) {
         PageHelper.startPage(pageNo, pageSize);
-        PageInfo<Notification> notificationPageInfo = new PageInfo<> (notificationMapper.selectByExample(new NotificationExample()));
+
+        NotificationExample notificationExample = new NotificationExample();
+        notificationExample.setOrderByClause("gmt_create desc");
+        PageInfo<Notification> notificationPageInfo = new PageInfo<> (notificationMapper.selectByExample(notificationExample));
         PageInfo<NotificationDTO> notificationDTOPageInfo = new PageInfo<>(new Page<>());
         BeanUtils.copyProperties(notificationPageInfo, notificationDTOPageInfo, "list");
         List<NotificationDTO> notificationDTOs = notificationPageInfo.getList().stream().map(notification -> {

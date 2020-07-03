@@ -59,7 +59,7 @@ public class QuestionServiceImpl implements IQuestionService {
             question.setId(selectQuestion.getId());
             question.setGmtCreate(selectQuestion.getGmtCreate());
             question.setGmtModified(System.currentTimeMillis());
-            col = questionMapper.updateByPrimaryKey(question);
+            col = questionMapper.updateByPrimaryKeyWithBLOBs(question);
         }
         return col;
     }

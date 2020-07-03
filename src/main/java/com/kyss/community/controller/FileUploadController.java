@@ -21,7 +21,7 @@ import java.io.IOException;
  * @Version 1.0
  **/
 @Controller
-public class FileUpload {
+public class FileUploadController {
 
     @Autowired
     private AzureProvider azureProvider;

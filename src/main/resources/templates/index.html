@@ -48,25 +48,25 @@
             <nav aria-label="Page navigation" th:object="${questions}">
                 <ul class="pagination">
                     <li th:if="*{isFirstPage == false}">
-                        <a th:href="@{/(pageNo=*{navigateFirstPage})}" aria-label="Head">
+                        <a th:href="@{/(pageNo=*{navigateFirstPage}, search=${search})}" aria-label="Head">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <li th:if="*{hasPreviousPage == true}">
-                        <a th:href="@{/(pageNo=*{prePage})}" aria-label="Previous">
+                        <a th:href="@{/(pageNo=*{prePage}, search=${search})}" aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
                     <li th:each="page : *{navigatepageNums}" th:class="${questions.pageNum == page} ? 'active' : ''">
-                        <a th:href="@{/(pageNo=${page})}" th:text="${page}"></a>
+                        <a th:href="@{/(pageNo=${page}, search=${search})}" th:text="${page}"></a>
                     </li>
                     <li th:if="*{hasNextPage == true}">
-                        <a th:href="@{/(pageNo=*{nextPage})}" aria-label="Previous">
+                        <a th:href="@{/(pageNo=*{nextPage}, search=${search})}" aria-label="Previous">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
                     <li th:if="*{isLastPage == false}">
-                        <a th:href="@{/(pageNo=*{navigateLastPage})}" aria-label="Tail">
+                        <a th:href="@{/(pageNo=*{navigateLastPage}, search=${search})}" aria-label="Tail">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
@@ -84,4 +84,5 @@
     </div>
 </div>
 </body>
+<div th:replace="includes/footer :: footer"></div>
 </html>
